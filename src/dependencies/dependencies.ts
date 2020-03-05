@@ -33,10 +33,16 @@ const readPackageJson = ({ repo }: { repo: string }) => {
         path.join(process.env.RUNNER_WORKSPACE as string, repo, 'package.json')
       )
       .toString('utf-8');
+
+    console.log(packageRaw);
+
     const { dependencies, devDependencies } = JSON.parse(packageRaw) as {
       dependencies: Record<string, string>;
       devDependencies: Record<string, string>;
     };
+
+    console.log({ dependencies, devDependencies });
+
     return { dependencies, devDependencies };
   } catch (error) {
     console.log('ERROR', error);
