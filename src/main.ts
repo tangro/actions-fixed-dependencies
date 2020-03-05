@@ -1,5 +1,39 @@
 import * as core from '@actions/core';
-import { GitHubContext } from '@tangro/tangro-github-toolkit';
+import { GitHubContext, setStatus } from '@tangro/tangro-github-toolkit';
+import { Result } from './Result';
+import { findUnfixedDependencies } from './dependencies/dependencies';
+
+async function wrapWithSetStatus<T>(
+  context: GitHubContext<{}>,
+  step: string,
+  code: () => Promise<Result<T>>
+) {
+  setStatus({
+    context,
+    step,
+    description: `Running ${step}`,
+    state: 'pending'
+  });
+
+  try {
+    const result = await code();
+    setStatus({
+      context,
+      step,
+      description: result.shortText,
+      state: result.isOkay ? 'success' : 'failure'
+    });
+    return result;
+  } catch (error) {
+    setStatus({
+      context,
+      step,
+      description: `Failed: ${step}`,
+      state: 'failure'
+    });
+    core.setFailed(`CI failed at step: ${step}`);
+  }
+}
 
 async function run() {
   try {
@@ -22,6 +56,21 @@ async function run() {
     ) as GitHubContext<{}>;
 
     const [owner, repo] = context.repository.split('/');
+    const checkDependencies = core.getInput('check-dependencies') === 'true';
+    const checkDevDependencies =
+      core.getInput('check-dev-dependencies') === 'true';
+
+    const results = wrapWithSetStatus(
+      context,
+      'fixed-dependencies',
+      async () => {
+        return findUnfixedDependencies({
+          repo,
+          checkDependencies,
+          checkDevDependencies
+        });
+      }
+    );
 
     core.debug('debug message');
   } catch (error) {

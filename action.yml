@@ -1,10 +1,13 @@
-name: 'Tangro Actions template'
-description: 'Add a description'
+name: 'actions-fixed-dependencies'
+description: 'An action to verify that the (dev) dependencies in the package.json are fixed and not ranges.'
 author: 'tangro'
 inputs:
-  example-input:
-    description: 'Add more inputs here'
-    required: true
+  check-dependencies:
+    description: 'Set to \'true\' to check the dependencies'
+    default: 'true'
+  check-dev-dependencies:
+    description: 'Set to \'true\' to check the devDependencies'
+    default: 'true'
 runs:
   using: 'node12'
   main: 'dist/index.js'
