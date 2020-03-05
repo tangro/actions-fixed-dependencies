@@ -75,6 +75,8 @@ async function run() {
         });
       }
     );
+
+    console.log(JSON.stringify(results, null, 2));
   } catch (error) {
     core.setFailed(error.message);
   }
