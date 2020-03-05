@@ -73,8 +73,6 @@ export const findUnfixedDependencies = async ({
           : ''
       ].join(', ');
 
-  console.log({ result, isOkay, shortText });
-
   return {
     isOkay,
     shortText,

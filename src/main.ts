@@ -60,7 +60,7 @@ async function run() {
     const checkDevDependencies =
       core.getInput('check-dev-dependencies') === 'true';
 
-    const results = wrapWithSetStatus(
+    const results = await wrapWithSetStatus(
       context,
       'fixed-dependencies',
       async () => {
@@ -72,7 +72,7 @@ async function run() {
       }
     );
 
-    core.debug('debug message');
+    console.log({ results });
   } catch (error) {
     core.setFailed(error.message);
   }
