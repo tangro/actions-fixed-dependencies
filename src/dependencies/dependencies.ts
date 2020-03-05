@@ -29,14 +29,14 @@ const toFileText = ({
   } else {
     const text = [
       !isOkay && checkDependencies && dependencies.length > 0
-        ? `<h1>Dependencies</h1><ul>${dependencies.map(
-            ({ name, version }) => `<li>${name}: ${version}</li>`
-          )}</ul>`
+        ? `<h1>Dependencies</h1><ul>${dependencies
+            .map(({ name, version }) => `<li>${name}: ${version}</li>`)
+            .join('')}</ul>`
         : '',
       !isOkay && checkDevDependencies && devDependencies.length > 0
-        ? `<h1>Dev dependencies</h1><ul>${devDependencies.map(
-            ({ name, version }) => `<li>${name}: ${version}</li>`
-          )}</ul>`
+        ? `<h1>Dev dependencies</h1><ul>${devDependencies
+            .map(({ name, version }) => `<li>${name}: ${version}</li>`)
+            .join('')}</ul>`
         : ''
     ].join('<br/>');
 
