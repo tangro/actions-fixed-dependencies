@@ -3,10 +3,10 @@ description: 'An action to verify that the (dev) dependencies in the package.jso
 author: 'tangro'
 inputs:
   check-dependencies:
-    description: 'Set to \'true\' to check the dependencies'
+    description: 'Set to "true" to check the dependencies'
     default: 'true'
   check-dev-dependencies:
-    description: 'Set to \'true\' to check the devDependencies'
+    description: 'Set to "true" to check the devDependencies'
     default: 'true'
 runs:
   using: 'node12'
