@@ -29,9 +29,7 @@ const collectUnstableDependencies = (dependencies: Record<string, string>) => {
 const readPackageJson = ({ repo }: { repo: string }) => {
   try {
     const packageRaw = fs
-      .readFileSync(
-        path.join(process.env.RUNNER_WORKSPACE as string, repo, 'package.json')
-      )
+      .readFileSync(path.join('./', 'package.json'))
       .toString('utf-8');
 
     console.log(packageRaw);
