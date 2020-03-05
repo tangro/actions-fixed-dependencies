@@ -20,7 +20,7 @@ const collectUnstableDependencies = (dependencies: Record<string, string>) => {
   );
 
   const unstableDependencies = allDependencies
-    .filter(({ isFixed }) => isFixed)
+    .filter(({ isFixed }) => !isFixed)
     .map(({ name, version }) => ({ name, version }));
 
   return unstableDependencies;
