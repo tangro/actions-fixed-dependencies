@@ -1,12 +1,7 @@
 import * as core from '@actions/core';
-import {
-  GitHubContext,
-  setStatus,
-  createComment
-} from '@tangro/tangro-github-toolkit';
+import { GitHubContext, setStatus } from '@tangro/tangro-github-toolkit';
 import { Result } from './Result';
 import { findUnfixedDependencies } from './dependencies/dependencies';
-import { create } from 'domain';
 
 async function wrapWithSetStatus<T>(
   context: GitHubContext<{}>,
