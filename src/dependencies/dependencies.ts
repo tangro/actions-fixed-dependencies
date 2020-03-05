@@ -114,7 +114,8 @@ export const findUnfixedDependencies = async ({
     ...result
   });
 
-  fs.writeFileSync('dependencies.html', fileContent);
+  fs.mkdirSync('dependencies');
+  fs.writeFileSync(path.join('dependencies', 'index.html'), fileContent);
 
   return {
     isOkay,
