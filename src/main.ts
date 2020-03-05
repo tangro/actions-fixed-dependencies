@@ -1,7 +1,12 @@
 import * as core from '@actions/core';
-import { GitHubContext, setStatus } from '@tangro/tangro-github-toolkit';
+import {
+  GitHubContext,
+  setStatus,
+  createComment
+} from '@tangro/tangro-github-toolkit';
 import { Result } from './Result';
 import { findUnfixedDependencies } from './dependencies/dependencies';
+import { create } from 'domain';
 
 async function wrapWithSetStatus<T>(
   context: GitHubContext<{}>,
@@ -71,7 +76,9 @@ async function run() {
       }
     );
 
-    console.log({ results });
+    if (results?.isOkay) {
+      createComment({ context, comment: results.text });
+    }
   } catch (error) {
     core.setFailed(error.message);
   }

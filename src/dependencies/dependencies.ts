@@ -111,6 +111,6 @@ export const findUnfixedDependencies = async ({
     isOkay,
     shortText,
     metadata: result,
-    text: shortText
+    text: toText({ checkDependencies, checkDevDependencies, isOkay, ...result })
   };
 };
