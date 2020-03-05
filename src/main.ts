@@ -8,29 +8,32 @@ async function wrapWithSetStatus<T>(
   step: string,
   code: () => Promise<Result<T>>
 ) {
-  setStatus({
+  await setStatus({
     context,
     step,
     description: `Running ${step}`,
     state: 'pending'
   });
+  core.info(`Setting status to pending`);
 
   try {
     const result = await code();
-    setStatus({
+    await setStatus({
       context,
       step,
       description: result.shortText,
       state: result.isOkay ? 'success' : 'failure'
     });
+    core.info(`Setting status to ${result.isOkay ? 'success' : 'failure'}`);
     return result;
   } catch (error) {
-    setStatus({
+    await setStatus({
       context,
       step,
       description: `Failed: ${step}`,
       state: 'failure'
     });
+    core.info(`Setting status to failure`);
     core.setFailed(`CI failed at step: ${step}`);
   }
 }
