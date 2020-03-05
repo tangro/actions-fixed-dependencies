@@ -32,14 +32,10 @@ const readPackageJson = ({ repo }: { repo: string }) => {
       .readFileSync(path.join('./', 'package.json'))
       .toString('utf-8');
 
-    console.log(packageRaw);
-
     const { dependencies, devDependencies } = JSON.parse(packageRaw) as {
       dependencies: Record<string, string>;
       devDependencies: Record<string, string>;
     };
-
-    console.log({ dependencies, devDependencies });
 
     return { dependencies, devDependencies };
   } catch (error) {
@@ -77,7 +73,7 @@ export const findUnfixedDependencies = async ({
           : ''
       ].join(', ');
 
-  console.log({ isOkay, shortText });
+  console.log({ result, isOkay, shortText });
 
   return {
     isOkay,
