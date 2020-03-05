@@ -75,10 +75,6 @@ async function run() {
         });
       }
     );
-
-    if (results?.isOkay) {
-      createComment({ context, comment: results.text });
-    }
   } catch (error) {
     core.setFailed(error.message);
   }

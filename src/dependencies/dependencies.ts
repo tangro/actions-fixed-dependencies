@@ -13,7 +13,7 @@ export interface DependencyInformation {
   devDependencies: Array<Dependency>;
 }
 
-const toText = ({
+const toFileText = ({
   dependencies,
   devDependencies,
   checkDependencies,
@@ -107,10 +107,19 @@ export const findUnfixedDependencies = async ({
           : ''
       ].join(', ');
 
+  const fileContent = toFileText({
+    checkDependencies,
+    checkDevDependencies,
+    isOkay,
+    ...result
+  });
+
+  fs.writeFileSync('dependencies.html', fileContent);
+
   return {
     isOkay,
     shortText,
     metadata: result,
-    text: toText({ checkDependencies, checkDevDependencies, isOkay, ...result })
+    text: shortText
   };
 };
