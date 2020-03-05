@@ -65,7 +65,6 @@ async function run() {
       'fixed-dependencies',
       async () => {
         return findUnfixedDependencies({
-          repo,
           checkDependencies,
           checkDevDependencies
         });

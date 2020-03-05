@@ -3,10 +3,46 @@ import * as fs from 'fs';
 import path from 'path';
 import { Result } from '../Result';
 
-export interface DependencyInformation {
-  dependencies: Array<{ name: string; version: string }>;
-  devDependencies: Array<{ name: string; version: string }>;
+interface Dependency {
+  name: string;
+  version: string;
 }
+
+export interface DependencyInformation {
+  dependencies: Array<Dependency>;
+  devDependencies: Array<Dependency>;
+}
+
+const toText = ({
+  dependencies,
+  devDependencies,
+  checkDependencies,
+  checkDevDependencies,
+  isOkay
+}: DependencyInformation & {
+  isOkay: boolean;
+  checkDependencies: boolean;
+  checkDevDependencies: boolean;
+}): string => {
+  if (isOkay) {
+    return 'All dependencies are fixed';
+  } else {
+    const text = [
+      !isOkay && checkDependencies && dependencies.length > 0
+        ? `<h1>Dependencies</h1><ul>${dependencies.map(
+            ({ name, version }) => `<li>${name}: ${version}</li>`
+          )}</ul>`
+        : '',
+      !isOkay && checkDevDependencies && devDependencies.length > 0
+        ? `<h1>Dev dependencies</h1><ul>${devDependencies.map(
+            ({ name, version }) => `<li>${name}: ${version}</li>`
+          )}</ul>`
+        : ''
+    ].join('<br/>');
+
+    return `<html><body>${text}</body></html>`;
+  }
+};
 
 const collectUnstableDependencies = (dependencies: Record<string, string>) => {
   const allDependencies = Object.entries(dependencies).map(
@@ -26,7 +62,7 @@ const collectUnstableDependencies = (dependencies: Record<string, string>) => {
   return unstableDependencies;
 };
 
-const readPackageJson = ({ repo }: { repo: string }) => {
+const readPackageJson = () => {
   try {
     const packageRaw = fs
       .readFileSync(path.join('./', 'package.json'))
@@ -45,15 +81,13 @@ const readPackageJson = ({ repo }: { repo: string }) => {
 };
 
 export const findUnfixedDependencies = async ({
-  repo,
   checkDependencies,
   checkDevDependencies
 }: {
-  repo: string;
   checkDependencies: boolean;
   checkDevDependencies: boolean;
 }): Promise<Result<DependencyInformation>> => {
-  const { dependencies, devDependencies } = readPackageJson({ repo });
+  const { dependencies, devDependencies } = readPackageJson();
   const result = {
     dependencies: collectUnstableDependencies(dependencies),
     devDependencies: collectUnstableDependencies(devDependencies)
