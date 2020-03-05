@@ -1,7 +1,8 @@
+import * as core from '@actions/core';
 import stable from 'semver-stable';
 import * as fs from 'fs';
 import path from 'path';
-import { Result } from '../Result';
+import { Result } from '@tangro/tangro-github-toolkit';
 
 interface Dependency {
   name: string;
@@ -44,6 +45,35 @@ const toFileText = ({
   }
 };
 
+const toComment = ({
+  dependencies,
+  devDependencies,
+  checkDependencies,
+  checkDevDependencies,
+  isOkay
+}: DependencyInformation & {
+  isOkay: boolean;
+  checkDependencies: boolean;
+  checkDevDependencies: boolean;
+}): string => {
+  if (isOkay) {
+    return 'All dependencies are fixed';
+  } else {
+    const text = [
+      !isOkay && checkDependencies && dependencies.length > 0
+        ? `# Dependencies
+${dependencies.map(({ name, version }) => `- ${name}: ${version}`).join('')}`
+        : '',
+      !isOkay && checkDevDependencies && devDependencies.length > 0
+        ? `# Dev dependencies
+${devDependencies.map(({ name, version }) => `- ${name}: ${version}`).join('')}`
+        : ''
+    ].join('\r\n\r\n');
+
+    return `<html><body>${text}</body></html>`;
+  }
+};
+
 const collectUnstableDependencies = (dependencies: Record<string, string>) => {
   const allDependencies = Object.entries(dependencies).map(
     ([name, version]) => {
@@ -75,7 +105,7 @@ const readPackageJson = () => {
 
     return { dependencies, devDependencies };
   } catch (error) {
-    console.log('ERROR', error);
+    core.error(`ERROR: ${error}`);
     throw error;
   }
 };
@@ -113,16 +143,22 @@ export const findUnfixedDependencies = async ({
     isOkay,
     ...result
   });
+  const comment = toComment({
+    checkDependencies,
+    checkDevDependencies,
+    isOkay,
+    ...result
+  });
 
   fs.mkdirSync('dependencies');
   fs.writeFileSync(path.join('dependencies', 'index.html'), fileContent);
 
-  console.log(`Result written to ${path.join('dependencies', 'index.html')}`);
+  core.info(`Result written to ${path.join('dependencies', 'index.html')}`);
 
   return {
     isOkay,
     shortText,
     metadata: result,
-    text: shortText
+    text: comment
   };
 };
