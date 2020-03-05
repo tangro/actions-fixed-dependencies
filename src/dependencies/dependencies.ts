@@ -69,10 +69,10 @@ export const findUnfixedDependencies = async ({
   const shortText = isOkay
     ? `All dependencies are fixed`
     : [
-        checkDependencies && result.dependencies.length === 0
+        checkDependencies && result.dependencies.length > 0
           ? `${result.dependencies.length} unfixed dependencies`
           : '',
-        checkDevDependencies && result.devDependencies.length === 0
+        checkDevDependencies && result.devDependencies.length > 0
           ? `${result.devDependencies.length} unfixed devDependencies`
           : ''
       ].join(', ');
