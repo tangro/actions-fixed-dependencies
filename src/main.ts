@@ -40,6 +40,13 @@ async function run() {
       }
     );
 
+    if (results) {
+      if (results.isOkay) {
+      } else {
+        core.setFailed(results.shortText);
+      }
+    }
+
     // TODO when action is run with a PR we want to add suggestions to fix the dependency
   } catch (error) {
     core.setFailed(error.message);
