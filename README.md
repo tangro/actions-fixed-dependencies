@@ -54,6 +54,10 @@ The action will set a status to the commit to `pending` under the context `Tangr
 
 It is also possible that the action posts a comment with the result to the commit. You have to set `post-comment` to `true`.
 
+# Versions
+
+Either use `latest` to always get the latest version or the specific version to get a fixed version of the action.
+
 # Example with arguments
 
 ```yml
