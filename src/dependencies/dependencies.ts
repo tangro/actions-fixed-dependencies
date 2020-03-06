@@ -61,20 +61,22 @@ const toComment = ({
   } else {
     const text = [
       !isOkay && checkDependencies && dependencies.length > 0
-        ? `# Dependencies
+        ? `### Dependencies
 ${dependencies
   .map(({ name, version }) => `- ${name}: ${version}`)
   .join('\r\n')}`
         : '',
       !isOkay && checkDevDependencies && devDependencies.length > 0
-        ? `# Dev dependencies
+        ? `### Dev dependencies
 ${devDependencies
   .map(({ name, version }) => `- ${name}: ${version}`)
   .join('\r\n')}`
         : ''
     ].join('\r\n\r\n');
 
-    return `${text}`;
+    return `You have unfixed dependencies in your package.json please fix them:
+
+${text}`;
   }
 };
 
