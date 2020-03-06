@@ -62,15 +62,19 @@ const toComment = ({
     const text = [
       !isOkay && checkDependencies && dependencies.length > 0
         ? `# Dependencies
-${dependencies.map(({ name, version }) => `- ${name}: ${version}`).join('')}`
+${dependencies
+  .map(({ name, version }) => `- ${name}: ${version}`)
+  .join('\r\n')}`
         : '',
       !isOkay && checkDevDependencies && devDependencies.length > 0
         ? `# Dev dependencies
-${devDependencies.map(({ name, version }) => `- ${name}: ${version}`).join('')}`
+${devDependencies
+  .map(({ name, version }) => `- ${name}: ${version}`)
+  .join('\r\n')}`
         : ''
     ].join('\r\n\r\n');
 
-    return `<html><body>${text}</body></html>`;
+    return `${text}`;
   }
 };
 

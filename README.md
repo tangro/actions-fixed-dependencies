@@ -54,33 +54,73 @@ The action will set a status to the commit to `pending` under the context `Tangr
 
 It is also possible that the action posts a comment with the result to the commit. You have to set `post-comment` to `true`.
 
-# Publishing an action
+# Example with arguments
 
-> **Important** Do **not** run `npm build`. It will be done automatically. And do not check in the `dist` directory.
+```yml
+check-dependencies:
+  runs-on: ubuntu-latest
+  steps:
+    - name: Checkout latest code
+      uses: actions/checkout@v1
+    - name: Use Node.js 12.x
+      uses: actions/setup-node@v1
+      with:
+        node-version: 12.x
+    - name: Check dependencies
+      uses: tangro/actions-fixed-dependencies@1.0.0
+      with:
+        check-dev-dependencies: false
+        post-comment: true
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GITHUB_CONTEXT: ${{ toJson(github) }}
+```
 
-There is a workflow already pre-configured that automatically publishs a new version when you push your code to the `master` branch. The workflow will take your npm package version and publish the action under that version. You have two options
+This config will skip checking the dev dependencies and will post a comment when the dependency check failed
 
-- Keep the current version number and the action will be updated
-- Bump the version number and a new action will be created
+# Using with a static file server
 
-The action-release workflow will create a branch with the `package.json` version as its name. An already existing branch will be overwritten.
+You can also publish the test results to a static file server. The action will write the results into `dependencies/index.html`.
 
-After the workflow/action has run your action will be available to be used.
+You can publish the results with our custom [deploy actions](https://github.com/tangro/actions-deploy)
 
-# FAQ
+```yml
+check-dependencies:
+  runs-on: ubuntu-latest
+  steps:
+    - name: Checkout latest code
+      uses: actions/checkout@v1
+    - name: Use Node.js 12.x
+      uses: actions/setup-node@v1
+      with:
+        node-version: 12.x
+    - name: Check dependencies
+      uses: tangro/actions-fixed-dependencies@1.0.0
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GITHUB_CONTEXT: ${{ toJson(github) }}
+    - name: Zip license check result
+      if: always()
+      run: |
+        cd dependencies
+        zip --quiet --recurse-paths ../dependencies.zip *
+    - name: Deploy dependencies result
+      if: always()
+      uses: tangro/actions-deploy@1.2.0
+      with:
+        context: auto
+        zip-file: dependencies.zip
+        deploy-url: ${{secrets.DEPLOY_URL}}
+        project: fixed-dependencies
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GITHUB_CONTEXT: ${{ toJson(github) }}
+        DEPLOY_PASSWORD: ${{ secrets.DEPLOY_PASSWORD }}
+        DEPLOY_USER: ${{ secrets.DEPLOY_USER }}
+```
 
-## Do I need to check-in the node_modules folder
+> **Attention** Do not forget to use the correct `DEPLOY_URL` and provide all the tokens the actions need.
 
-No. This template uses [@zeit/ncc](https://github.com/zeit/ncc) to automatically create and bundle a single `index.js` with the `node_modules` and code included.
+# Development
 
-## Can I put the `dist/` folder into the `.gitignore`
-
-No. It needs to be present for the action. It is planned to automatically alter the `.gitignore` to always check-in the `dist/` folder. But that's not ready yet.
-
-## What happens if I ran `npm build`
-
-Just delete the `dist/` folder.
-
-## Can I use a different branch than `master`
-
-Yes. Edit the `.github/workflows/release-action.yml`
+Follow the guide of the [tangro-actions-template](https://github.com/tangro/tangro-actions-template)
