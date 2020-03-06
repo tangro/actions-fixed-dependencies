@@ -1,7 +1,8 @@
 import * as core from '@actions/core';
 import {
   GitHubContext,
-  wrapWithSetStatus
+  wrapWithSetStatus,
+  createComment
 } from '@tangro/tangro-github-toolkit';
 import { findUnfixedDependencies } from './dependencies/dependencies';
 
@@ -44,6 +45,12 @@ async function run() {
       if (results.isOkay) {
       } else {
         core.setFailed(results.shortText);
+        if (core.getInput('post-comment') === 'true') {
+          createComment({
+            context,
+            comment: results.text
+          });
+        }
       }
     }
 

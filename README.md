@@ -1,15 +1,58 @@
-# tangro-actions-template
+# actions-fixed-dependencies
 
-A GitHub Action template for tangro GitHub actions. It has the build step, the workflow and some dependencies pre-configured.
+Checks whether all dependencies in the `package.json` are fixed.
 
-# Using this template
+Example:
 
-a) Either go to [the repository](https://github.com/tangro/tangro-actions-template) and click on [Use this template](https://github.com/tangro/tangro-actions-template/generate)
-b) Or go to [create new tangro repo](https://github.com/organizations/tangro/repositories/new) or [create new user repo](https://github.com/new) and then select the `tangro/tangro-action-template` from the _Repository templaet_ list.
+```json
+{
+  "dependencies": {
+    "lodash": "4.7.0", // accepted
+    "lodash": "=4.7.0", // accepted
 
-# Development
+    "lodash": "latest", // not accepted
+    "lodash": ">4.7.0", // not accepted
+    "lodash": "^4.7.0", // not accepted
+    "lodash": "~4.7.0" // not accepted
+  }
+}
+```
 
-Create a new repository and copy the contents of this template repository to the new repository. Do not forget the `.github` folder. It may be hidden on your machine.
+# Example job
+
+```yml
+check-dependencies:
+  runs-on: ubuntu-latest
+  steps:
+    - name: Checkout latest code
+      uses: actions/checkout@v1
+    - name: Use Node.js 12.x
+      uses: actions/setup-node@v1
+      with:
+        node-version: 12.x
+    - name: Check dependencies
+      uses: tangro/actions-fixed-dependencies@1.0.0
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GITHUB_CONTEXT: ${{ toJson(github) }}
+```
+
+> **Attention** Do not forget to pass the `GITHUB_TOKEN` and `GITHUB_CONTEXT` to the `actions-fixed-dependencies` action.
+> **Hint** You do not need a `npm install` step. This speeds up the job significantly
+
+Steps this example job will perform
+
+1. Check out the latest code
+2. Use node v12
+3. (this action) Check the dependencies
+
+# Usage
+
+The action will read the contents of the `package.json` and scan the `dependencies` and `devDependencies` by default. You can disable checking `dependencies` and `devDependencies` in the arguments.
+
+The action will set a status to the commit to `pending` under the context `Tangro CI/fixed-dependencies`. When it finishes it will set the result as the description of the status.
+
+It is also possible that the action posts a comment with the result to the commit. You have to set `post-comment` to `true`.
 
 # Publishing an action
 

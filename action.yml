@@ -8,6 +8,9 @@ inputs:
   check-dev-dependencies:
     description: 'Set to "true" to check the devDependencies'
     default: 'true'
+  post-comment:
+    description: 'Set to "true" to post the results of the actions to the commit. Will only add a comment when the check failed.'
+    default: 'false'
 runs:
   using: 'node12'
   main: 'dist/index.js'
