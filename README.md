@@ -31,7 +31,7 @@ check-dependencies:
       with:
         node-version: 12.x
     - name: Check dependencies
-      uses: tangro/actions-fixed-dependencies@1.0.0
+      uses: tangro/actions-fixed-dependencies@1.0.1
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         GITHUB_CONTEXT: ${{ toJson(github) }}
@@ -71,7 +71,7 @@ check-dependencies:
       with:
         node-version: 12.x
     - name: Check dependencies
-      uses: tangro/actions-fixed-dependencies@1.0.0
+      uses: tangro/actions-fixed-dependencies@1.0.1
       with:
         check-dev-dependencies: false
         post-comment: true
@@ -99,7 +99,7 @@ check-dependencies:
       with:
         node-version: 12.x
     - name: Check dependencies
-      uses: tangro/actions-fixed-dependencies@1.0.0
+      uses: tangro/actions-fixed-dependencies@1.0.1
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         GITHUB_CONTEXT: ${{ toJson(github) }}
