@@ -18,7 +18,7 @@
   "license": "MIT",
   "dependencies": {
     "@actions/core": "1.2.4",
-    "@tangro/tangro-github-toolkit": "1.0.1",
+    "@tangro/tangro-github-toolkit": "1.0.2",
     "semver-stable": "3.0.0"
   },
   "devDependencies": {
