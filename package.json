@@ -1,6 +1,6 @@
 {
   "name": "actions-fixed-dependencies",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "private": true,
   "description": "This action checks the package.json for unfixed dependencies",
   "main": "lib/main.js",
@@ -18,7 +18,7 @@
   "license": "MIT",
   "dependencies": {
     "@actions/core": "1.2.6",
-    "@tangro/tangro-github-toolkit": "1.0.2",
+    "@tangro/tangro-github-toolkit": "1.0.3",
     "semver-stable": "3.0.0"
   },
   "devDependencies": {
