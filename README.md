@@ -4,7 +4,7 @@ Checks whether all dependencies in the `package.json` are fixed.
 
 # Version
 
-You can use a specific `version` of this action. The latest published version is `v1.0.4`. You can also use `latest` to always get the latest version.
+You can use a specific `version` of this action. The latest published version is `v1.0.5`. You can also use `latest` to always get the latest version.
 
 # Example:
 
@@ -31,11 +31,11 @@ check-dependencies:
     - name: Checkout latest code
       uses: actions/checkout@v2
     - name: Use Node.js 12.x
-      uses: actions/setup-node@v2
+      uses: actions/setup-node@v2.1.2
       with:
         node-version: 12.x
     - name: Check dependencies
-      uses: tangro/actions-fixed-dependencies@v1.0.4
+      uses: tangro/actions-fixed-dependencies@v1.0.5
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         GITHUB_CONTEXT: ${{ toJson(github) }}
@@ -67,11 +67,11 @@ check-dependencies:
     - name: Checkout latest code
       uses: actions/checkout@v2
     - name: Use Node.js 12.x
-      uses: actions/setup-node@v2
+      uses: actions/setup-node@v2.1.2
       with:
         node-version: 12.x
     - name: Check dependencies
-      uses: tangro/actions-fixed-dependencies@v1.0.4
+      uses: tangro/actions-fixed-dependencies@v1.0.5
       with:
         check-dev-dependencies: false
         post-comment: true
@@ -95,11 +95,11 @@ check-dependencies:
     - name: Checkout latest code
       uses: actions/checkout@v2
     - name: Use Node.js 12.x
-      uses: actions/setup-node@v2
+      uses: actions/setup-node@v2.1.2
       with:
         node-version: 12.x
     - name: Check dependencies
-      uses: tangro/actions-fixed-dependencies@v1.0.4
+      uses: tangro/actions-fixed-dependencies@v1.0.5
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         GITHUB_CONTEXT: ${{ toJson(github) }}
@@ -110,7 +110,7 @@ check-dependencies:
         zip --quiet --recurse-paths ../dependencies.zip *
     - name: Deploy dependencies result
       if: always()
-      uses: tangro/actions-deploy@v1.2.6
+      uses: tangro/actions-deploy@v1.2.7
       with:
         context: auto
         zip-file: dependencies.zip
