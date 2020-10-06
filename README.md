@@ -4,7 +4,7 @@ Checks whether all dependencies in the `package.json` are fixed.
 
 # Version
 
-You can use a specific `version` of this action. The latest published version is `v1.0.5`. You can also use `latest` to always get the latest version.
+You can use a specific `version` of this action. The latest published version is `v1.0.6`. You can also use `latest` to always get the latest version.
 
 # Example:
 
@@ -35,7 +35,7 @@ check-dependencies:
       with:
         node-version: 12.x
     - name: Check dependencies
-      uses: tangro/actions-fixed-dependencies@v1.0.5
+      uses: tangro/actions-fixed-dependencies@v1.0.6
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         GITHUB_CONTEXT: ${{ toJson(github) }}
@@ -71,7 +71,7 @@ check-dependencies:
       with:
         node-version: 12.x
     - name: Check dependencies
-      uses: tangro/actions-fixed-dependencies@v1.0.5
+      uses: tangro/actions-fixed-dependencies@v1.0.6
       with:
         check-dev-dependencies: false
         post-comment: true
@@ -99,7 +99,7 @@ check-dependencies:
       with:
         node-version: 12.x
     - name: Check dependencies
-      uses: tangro/actions-fixed-dependencies@v1.0.5
+      uses: tangro/actions-fixed-dependencies@v1.0.6
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         GITHUB_CONTEXT: ${{ toJson(github) }}
@@ -110,7 +110,7 @@ check-dependencies:
         zip --quiet --recurse-paths ../dependencies.zip *
     - name: Deploy dependencies result
       if: always()
-      uses: tangro/actions-deploy@v1.2.7
+      uses: tangro/actions-deploy@v1.2.8
       with:
         context: auto
         zip-file: dependencies.zip
