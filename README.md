@@ -1,8 +1,12 @@
-# actions-fixed-dependencies
+# tangro/actions-fixed-dependencies
 
 Checks whether all dependencies in the `package.json` are fixed.
 
-Example:
+# Version
+
+You can use a specific `version` of this action. The latest published version is `v1.0.4`. You can also use `latest` to always get the latest version.
+
+# Example:
 
 ```json
 {
@@ -25,19 +29,19 @@ check-dependencies:
   runs-on: ubuntu-latest
   steps:
     - name: Checkout latest code
-      uses: actions/checkout@v1
+      uses: actions/checkout@v2
     - name: Use Node.js 12.x
-      uses: actions/setup-node@v1
+      uses: actions/setup-node@v2
       with:
         node-version: 12.x
     - name: Check dependencies
-      uses: tangro/actions-fixed-dependencies@1.0.1
+      uses: tangro/actions-fixed-dependencies@v1.0.4
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         GITHUB_CONTEXT: ${{ toJson(github) }}
 ```
 
-> **Attention** Do not forget to pass the `GITHUB_TOKEN` and `GITHUB_CONTEXT` to the `actions-fixed-dependencies` action.
+> **Attention** Do not forget to pass the `GITHUB_TOKEN` and `GITHUB_CONTEXT` to the `tangro/actions-fixed-dependencies` action.
 > **Hint** You do not need a `npm install` step. This speeds up the job significantly
 
 Steps this example job will perform
@@ -54,10 +58,6 @@ The action will set a status to the commit to `pending` under the context `Tangr
 
 It is also possible that the action posts a comment with the result to the commit. You have to set `post-comment` to `true`.
 
-# Versions
-
-Either use `latest` to always get the latest version or the specific version to get a fixed version of the action.
-
 # Example with arguments
 
 ```yml
@@ -65,13 +65,13 @@ check-dependencies:
   runs-on: ubuntu-latest
   steps:
     - name: Checkout latest code
-      uses: actions/checkout@v1
+      uses: actions/checkout@v2
     - name: Use Node.js 12.x
-      uses: actions/setup-node@v1
+      uses: actions/setup-node@v2
       with:
         node-version: 12.x
     - name: Check dependencies
-      uses: tangro/actions-fixed-dependencies@1.0.1
+      uses: tangro/actions-fixed-dependencies@v1.0.4
       with:
         check-dev-dependencies: false
         post-comment: true
@@ -93,13 +93,13 @@ check-dependencies:
   runs-on: ubuntu-latest
   steps:
     - name: Checkout latest code
-      uses: actions/checkout@v1
+      uses: actions/checkout@v2
     - name: Use Node.js 12.x
-      uses: actions/setup-node@v1
+      uses: actions/setup-node@v2
       with:
         node-version: 12.x
     - name: Check dependencies
-      uses: tangro/actions-fixed-dependencies@1.0.1
+      uses: tangro/actions-fixed-dependencies@v1.0.4
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         GITHUB_CONTEXT: ${{ toJson(github) }}
@@ -110,7 +110,7 @@ check-dependencies:
         zip --quiet --recurse-paths ../dependencies.zip *
     - name: Deploy dependencies result
       if: always()
-      uses: tangro/actions-deploy@1.2.0
+      uses: tangro/actions-deploy@v1.2.6
       with:
         context: auto
         zip-file: dependencies.zip
@@ -128,3 +128,11 @@ check-dependencies:
 # Development
 
 Follow the guide of the [tangro-actions-template](https://github.com/tangro/tangro-actions-template)
+
+# Scripts
+
+- `npm run update-readme` - Run this script to update the README with the latest versions.
+
+  > You do not have to run this script, since it is run automatically by the release action
+
+- `npm run update-dependencies` - Run this script to update all the dependencies
