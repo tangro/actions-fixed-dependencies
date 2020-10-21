@@ -1,6 +1,6 @@
 {
   "name": "@tangro/actions-fixed-dependencies",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "private": true,
   "description": "This action checks the package.json for unfixed dependencies",
   "main": "lib/main.js",
