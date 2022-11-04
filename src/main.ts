@@ -56,7 +56,7 @@ async function run() {
 
     // TODO when action is run with a PR we want to add suggestions to fix the dependency
   } catch (error) {
-    core.setFailed(error.message);
+    core.setFailed((error as any)?.message ?? 'ERROR happened');
   }
 }
 

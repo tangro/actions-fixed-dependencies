@@ -29,7 +29,7 @@ check-dependencies:
   runs-on: ubuntu-latest
   steps:
     - name: Checkout latest code
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
     - name: Use Node.js 12.x
       uses: actions/setup-node@v2.1.2
       with:
@@ -65,7 +65,7 @@ check-dependencies:
   runs-on: ubuntu-latest
   steps:
     - name: Checkout latest code
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
     - name: Use Node.js 12.x
       uses: actions/setup-node@v2.1.2
       with:
@@ -93,7 +93,7 @@ check-dependencies:
   runs-on: ubuntu-latest
   steps:
     - name: Checkout latest code
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
     - name: Use Node.js 12.x
       uses: actions/setup-node@v2.1.2
       with:

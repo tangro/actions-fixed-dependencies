@@ -30,10 +30,10 @@ check-dependencies:
   steps:
     - name: Checkout latest code
       uses: <%= actions.checkout %>
-    - name: Use Node.js 12.x
+    - name: Use Node.js 16.x
       uses: <%= actions['setup-node'] %>
       with:
-        node-version: 12.x
+        node-version: 16.x
     - name: Check dependencies
       uses: <%= uses %>
       env:
@@ -66,10 +66,10 @@ check-dependencies:
   steps:
     - name: Checkout latest code
       uses: <%= actions.checkout %>
-    - name: Use Node.js 12.x
+    - name: Use Node.js 16.x
       uses: <%= actions['setup-node'] %>
       with:
-        node-version: 12.x
+        node-version: 16.x
     - name: Check dependencies
       uses: <%= uses %>
       with:
@@ -94,10 +94,10 @@ check-dependencies:
   steps:
     - name: Checkout latest code
       uses: <%= actions.checkout %>
-    - name: Use Node.js 12.x
+    - name: Use Node.js 16.x
       uses: <%= actions['setup-node'] %>
       with:
-        node-version: 12.x
+        node-version: 16.x
     - name: Check dependencies
       uses: <%= uses %>
       env:
