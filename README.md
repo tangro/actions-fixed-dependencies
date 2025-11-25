@@ -4,7 +4,7 @@ Checks whether all dependencies in the `package.json` are fixed.
 
 # Version
 
-You can use a specific `version` of this action. The latest published version is `v1.0.14`. You can also use `latest` to always get the latest version.
+You can use a specific `version` of this action. The latest published version is `v1.0.15`. You can also use `latest` to always get the latest version.
 
 # Example:
 
@@ -29,13 +29,13 @@ check-dependencies:
   runs-on: ubuntu-latest
   steps:
     - name: Checkout latest code
-      uses: actions/checkout@v6-beta
+      uses: actions/checkout@v6
     - name: Use Node.js 16.x
       uses: actions/setup-node@v6.0.0
       with:
         node-version: 16.x
     - name: Check dependencies
-      uses: tangro/actions-fixed-dependencies@v1.0.14
+      uses: tangro/actions-fixed-dependencies@v1.0.15
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         GITHUB_CONTEXT: ${{ toJson(github) }}
@@ -65,13 +65,13 @@ check-dependencies:
   runs-on: ubuntu-latest
   steps:
     - name: Checkout latest code
-      uses: actions/checkout@v6-beta
+      uses: actions/checkout@v6
     - name: Use Node.js 16.x
       uses: actions/setup-node@v6.0.0
       with:
         node-version: 16.x
     - name: Check dependencies
-      uses: tangro/actions-fixed-dependencies@v1.0.14
+      uses: tangro/actions-fixed-dependencies@v1.0.15
       with:
         check-dev-dependencies: false
         post-comment: true
@@ -93,13 +93,13 @@ check-dependencies:
   runs-on: ubuntu-latest
   steps:
     - name: Checkout latest code
-      uses: actions/checkout@v6-beta
+      uses: actions/checkout@v6
     - name: Use Node.js 16.x
       uses: actions/setup-node@v6.0.0
       with:
         node-version: 16.x
     - name: Check dependencies
-      uses: tangro/actions-fixed-dependencies@v1.0.14
+      uses: tangro/actions-fixed-dependencies@v1.0.15
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         GITHUB_CONTEXT: ${{ toJson(github) }}
